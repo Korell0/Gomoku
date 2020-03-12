@@ -11,7 +11,6 @@ public class Game implements GameInterface {
 	board = new int [nRows][nCols];
 	rows = nRows;
 	cols = nCols;
-
     }
 
     public int[][] getBoard() {
