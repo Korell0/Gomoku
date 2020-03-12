@@ -5,14 +5,35 @@ public class Game implements GameInterface {
     private int[][] board;
     private int rows;
     private int cols;
+    int numberOfPlayers;
+    private Player[] players;
 
     public Game(int nRows, int nCols) {
         board = new int[nRows][nCols];
+        numberOfPlayers = 2;
+        players = new Player[numberOfPlayers];
+
+        for(int index = 0; index < numberOfPlayers; index++){
+            players[index] = new Player();
+        }
 
         rows = nRows;
         cols = nCols;
 
     }
+
+    /*
+    public Game(int nRows, int nCols, int numberOfPlayers) {
+        board = new int[nRows][nCols];
+        players = new Player[numberOfPlayers];
+
+        rows = nRows;
+        cols = nCols;
+
+    }
+
+    */
+
 
     public int[][] getBoard() {
         return board;
@@ -58,6 +79,10 @@ public class Game implements GameInterface {
     }
 
     public void printResult(int player) {
+
+        int score = this.players[player].getPlayerScore();
+
+        System.out.println("The " + player + ". player's score: " + score);
     }
 
     public void enableAi(int player) {
@@ -66,5 +91,6 @@ public class Game implements GameInterface {
     public void play(int howMany) {
 
         printBoard();
+        printResult(0);
     }
 }
