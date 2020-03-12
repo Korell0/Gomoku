@@ -52,7 +52,7 @@ public class Game implements GameInterface {
 
         for(int index = 0; index < coordinates.length; index++) {
 
-            System.out.println("Player " + player + ": " + "give us the " + coordinates[index]+ "coordinate:  ");
+            System.out.println("Player " + player  + ": " + "give us the " + coordinates[index]+ " coordinate:  ");
 
             int xCoordinate = scanner.nextInt();
             xCoordinate -= 1;
@@ -76,7 +76,29 @@ public class Game implements GameInterface {
     }
 
     public boolean isFull() {
-        return false;
+        boolean zeroFound = false;
+
+
+        int xCoord = 0;
+
+        while (xCoord < cols && !zeroFound){
+
+            int yCoord = 0;
+            while (yCoord < rows && !zeroFound){
+
+                if(board[xCoord][yCoord] == 0){
+                    zeroFound = true;
+                }
+                yCoord += 1;
+
+            }
+
+
+            xCoord += 1;
+        }
+
+        return !zeroFound;
+
     }
 
     public void printBoard() {
@@ -85,9 +107,11 @@ public class Game implements GameInterface {
 
                 if ( board[indexRows][indexCols] == 0 ) {
                     System.out.print(" . ");
+
                 } else if ( board[indexRows][indexCols] == 1){
-                    System.out.print(" X ");
-                } else if ( board[indexRows][indexCols] == 2){
+                    System.out.print(" X ");}
+
+                    else if ( board[indexRows][indexCols] == 2){
                     System.out.print(" O ");
                 }
             }
@@ -105,19 +129,49 @@ public class Game implements GameInterface {
     public void enableAi(int player) {
     }
 
+    public boolean spotTaken(int xCoord, int yCoord){
+
+        return board[xCoord][yCoord] != 0;
+
+    }
+
     public void play(int howMany) {
 
-        int player = 1;
-        while (!hasWon(player, howMany)){
-            printBoard();
-            int[] move = getMove(player);
-            mark(move[0],move[1],move[2]);
-            if (player == 1){
-                player = 2;
-            }
-            else if (player == 2){
-                player = player -1;
-            }
+        boolean gameOver = false;
+
+
+        while(!gameOver && !isFull()) {
+
+            int[] playerMove = new int[3];
+                int player = 0;
+                while (player < players.length && !isFull()) {
+
+                    printBoard();
+
+                    do {
+
+                        playerMove = getMove(player + 1);
+
+                        if (spotTaken(playerMove[2], playerMove[1])) {
+                            System.out.println("That spot is already taken, chose another one!");
+                            System.out.println();
+                        }
+                    }
+
+                    while (spotTaken(playerMove[2], playerMove[1]));
+
+
+                    mark(playerMove[0], playerMove[2], playerMove[1]);
+
+
+                    gameOver = hasWon(player, 5);
+
+                    player += 1;
+                    System.out.println(gameOver);
+                    System.out.println(isFull());
+                }
         }
+
     }
+
 }
