@@ -76,7 +76,29 @@ public class Game implements GameInterface {
     }
 
     public boolean isFull() {
-        return false;
+        boolean zeroFound = false;
+
+
+        int xCoord = 0;
+
+        while (xCoord < cols && !zeroFound){
+            
+            int yCoord = 0;
+            while (yCoord < rows && !zeroFound){
+
+                if(board[xCoord][yCoord] == 0){
+                    zeroFound = true;
+                }
+                yCoord += 1;
+
+            }
+
+
+            xCoord += 1;
+        }
+
+        return !zeroFound;
+
     }
 
     public void printBoard() {
@@ -85,9 +107,11 @@ public class Game implements GameInterface {
 
                 if ( board[indexRows][indexCols] == 0 ) {
                     System.out.print(" . ");
+
                 } else if ( board[indexRows][indexCols] == 1){
-                    System.out.print(" X ");
-                } else if ( board[indexRows][indexCols] == 2){
+                    System.out.print(" X ");}
+
+                    else if ( board[indexRows][indexCols] == 2){
                     System.out.print(" O ");
                 }
             }
@@ -107,7 +131,7 @@ public class Game implements GameInterface {
 
     public boolean spotTaken(int xCoord, int yCoord){
 
-        return board[xCoord][yCoord] == 0;
+        return board[xCoord][yCoord] != 0;
 
     }
 
@@ -116,31 +140,38 @@ public class Game implements GameInterface {
         boolean gameOver = false;
 
 
-        while(!gameOver) {
+        while(!gameOver && !isFull()) {
+
             int[] playerMove = new int[3];
-                for (int player = 0; player < players.length; player++) {
-                printBoard();
+                int player = 0;
+                while (player < players.length && !isFull()) {
 
-                do{
+                    printBoard();
 
-                    playerMove  = getMove(player + 1);
+                    do {
 
-                    if(!spotTaken(playerMove[1], playerMove[2])){
-                        System.out.println("That spot is already taken, chose another one!");
-                        System.out.println();
+                        playerMove = getMove(player + 1);
+
+                        if (spotTaken(playerMove[2], playerMove[1])) {
+                            System.out.println("That spot is already taken, chose another one!");
+                            System.out.println();
+                        }
                     }
-                }
 
-                while(!spotTaken(playerMove[1], playerMove[2]));
+                    while (spotTaken(playerMove[2], playerMove[1]));
 
 
-                    mark(playerMove[0], playerMove[1], playerMove[2]);
+                    mark(playerMove[0], playerMove[2], playerMove[1]);
+
+
                     gameOver = hasWon(player, 5);
 
+                    player += 1;
+                    System.out.println(gameOver);
+                    System.out.println(isFull());
+                }
+        }
 
-
-
-            }
-        }}
+    }
 
 }
