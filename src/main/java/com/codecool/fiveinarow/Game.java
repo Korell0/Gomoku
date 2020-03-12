@@ -52,7 +52,9 @@ public class Game implements GameInterface {
 
         for(int index = 0; index < coordinates.length; index++) {
 
+
             System.out.println("Player " + player  + ": " + "give us the " + coordinates[index]+ " coordinate:  ");
+
 
             int xCoordinate = scanner.nextInt();
             xCoordinate -= 1;
@@ -110,10 +112,12 @@ public class Game implements GameInterface {
                 if ( board[indexRows][indexCols] == 0 ) {
                     System.out.print(" . ");
 
+
                 } else if ( board[indexRows][indexCols] == 1){
                     System.out.print(" X ");}
 
                     else if ( board[indexRows][indexCols] == 2){
+
                     System.out.print(" O ");
                 }
             }
