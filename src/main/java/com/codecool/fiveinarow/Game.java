@@ -27,12 +27,9 @@ public class Game implements GameInterface {
     public Game(int nRows, int nCols, int numberOfPlayers) {
         board = new int[nRows][nCols];
         players = new Player[numberOfPlayers];
-
         rows = nRows;
         cols = nCols;
-
     }
-
     */
 
 
@@ -45,29 +42,25 @@ public class Game implements GameInterface {
     }
 
     public int[] getMove(int player) {
-       int[] rightdata = new int[3];
-       rightdata[0] = player;
-        if ( player == 1 ){
-            System.out.println("Player 1 give us the X coordinate: ");
-            Scanner xmove = new Scanner(System.in);
-            int Xnextmove = xmove.nextInt()-1;
-            rightdata[1] = Xnextmove;
-            System.out.println("Player 1 give us the Y coordinate: ");
-            Scanner ymove = new Scanner(System.in);
-            int Ynextmove = ymove.nextInt()-1;
-            rightdata[2] = Ynextmove;
-            }
-        else if ( player == 2 ){
-            Scanner xmove = new Scanner(System.in);
-            System.out.println("Player 2 give us the X coordinate: ");
-            int Xnextmove = xmove.nextInt()-1;
-            rightdata[1] = Xnextmove;
-            Scanner ymove = new Scanner(System.in);
-            System.out.println("Player 2 give us the Y coordinate: ");
-            int Ynextmove = ymove.nextInt()-1;
-            rightdata[2] = Ynextmove;
+        Scanner scanner = new Scanner(System.in);
+
+        int[] playerMove = new int[3];
+
+        playerMove[0] = player;
+
+        char[] coordinates = {'X', 'Y'};
+
+        for(int index = 0; index < coordinates.length; index++) {
+
+            System.out.println("Player " + player + ": " + "give us the " + coordinates[index]+ "coordinate:  ");
+
+            int xCoordinate = scanner.nextInt();
+            xCoordinate -= 1;
+
+            playerMove[index + 1] = xCoordinate;
         }
-        return rightdata;
+
+        return playerMove;
     }
 
     public int[] getAiMove(int player) {
@@ -87,19 +80,19 @@ public class Game implements GameInterface {
     }
 
     public void printBoard() {
- 	for (int indexRows = 0 ; indexRows < rows ; indexRows++ ){
-		for (int indexCols = 0 ; indexCols < cols ; indexCols++ ){
+        for (int indexRows = 0 ; indexRows < rows ; indexRows++ ){
+            for (int indexCols = 0 ; indexCols < cols ; indexCols++ ){
 
-			if ( board[indexRows][indexCols] == 0 ) {
-                System.out.print(" . ");
-            } else if ( board[indexRows][indexCols] == 1){
-                System.out.print(" X ");
-            } else if ( board[indexRows][indexCols] == 2){
-                System.out.print(" O ");
+                if ( board[indexRows][indexCols] == 0 ) {
+                    System.out.print(" . ");
+                } else if ( board[indexRows][indexCols] == 1){
+                    System.out.print(" X ");
+                } else if ( board[indexRows][indexCols] == 2){
+                    System.out.print(" O ");
+                }
             }
-		}
-	System.out.println();
-	}
+            System.out.println();
+        }
     }
 
     public void printResult(int player) {
