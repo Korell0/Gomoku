@@ -1,4 +1,5 @@
 # Five-in-a-row
+.
 
 ## Story
 
